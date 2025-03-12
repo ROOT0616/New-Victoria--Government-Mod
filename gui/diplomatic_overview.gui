@@ -3157,7 +3157,6 @@ types diplomatic_panel
 						icon = {
 							size = { 80 80 }
 							texture = "[Company.GetCompanyType.GetIcon]"
-	
 						}
 						textbox = {
 							text = "[Company.GetName]"

@@ -3699,7 +3699,9 @@ nvgm_ranking_chart.2 = {
 	hidden = yes
 	immediate = {
 		nvgm_subject_investment_pool_ranking_effect = yes
+		nvgm_subject_pop_strata_effect = yes
 		nvgm_subject_techs_researched_effect = yes
+		# nvgm_subject_company_effect = yes
 	}
 }
 

@@ -277,7 +277,9 @@ widget = {
 	}
 	nvgm_default_popup = {}
 	nvgm_data_popup = {}
-	nvgm_subject_popup = {}
+	nvgm_subject_popup_1 = {}
+	nvgm_subject_popup_2 = {}
+	nvgm_subject_popup_3 = {}
 	nvgm_ranking_chart_popup = {}
 	# NVGM
 

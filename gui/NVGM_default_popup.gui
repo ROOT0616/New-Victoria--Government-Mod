@@ -78,7 +78,7 @@
 					}
 					flowcontainer = {
 						textbox = {
-							raw_text = "Subject Menu"
+							raw_text = "Overlord & Subject Data"
 							autoresize = yes
 							margin = { 10 10 }
 							multiline = yes
@@ -91,6 +91,10 @@
 								parentanchor = vcenter|left
 								checked = "[GetVariableSystem.Exists('show_nvgm_subject_popup')]"
 								onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup')]"
+								onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+								onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+								onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+								onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_investment_pool')]"
 								onclick = "[ExecuteConsoleCommand('event nvgm_ranking_chart.2')]"
 							}
 						}
@@ -271,185 +275,6 @@
 						parentanchor = vcenter|left
 						tooltip = "TOOLTIP_RESET"
 						onclick = "[ExecuteConsoleCommand('event nvgm_ranking_chart.3')]"
-						size = { 24 24 }
-					}
-				}
-			}
-		}
-	}
-	type nvgm_subject_popup = default_popup
-	{
-		layer = top
-		visible = "[GetVariableSystem.Exists('show_nvgm_subject_popup')]"
-		blockoverride "window_header_name" {
-			text = "Subject Data"
-		}
-		blockoverride "header_back_button_visibility" {
-			visible = yes
-		}
-		blockoverride "header_close_button_visibility" {
-			visible = yes
-		}
-    blockoverride "header_back_button" {
-			onclick = "[GetVariableSystem.Clear('show_nvgm_default_popup'))]"
-			onclick = "[GetVariableSystem.Toggle('show_nvgm_default_popup')]"
-			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup'))]"
-    }
-		blockoverride "header_close_button" {
-			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup')]"
-		}
-		blockoverride "scrollarea_content" {
-			flowcontainer = {
-				resizeparent = yes
-				direction = horizontal
-				maximumsize = { 1400 -1 }
-				minimumsize = { 1400 -1 }
-				flowcontainer = {
-					direction = vertical
-					datamodel = "[GetPlayer.MakeScope.GetList('nvgm_subject_investment_pool_list')]"
-					maximumsize = { 700 -1 }
-					minimumsize = { 700 -1 }
-					widget = {
-						size = { 20 20 }
-					}
-					textbox = {
-						parentanchor = hcenter|center
-						align = center
-						fontsize = 25
-						raw_text = "[concept_investment_pool]"
-					}
-					widget = {
-						size = { 25 25 }
-					}
-					item = {
-						flowcontainer = {
-							spacing = 5
-							datacontext = "[Scope.GetCountry]"
-							widget = {
-								textbox = {
-									position = { 80 20 }
-									size = { 700 14 }
-									fontsize = 17
-									parentanchor = vcenter
-									align = nobaseline|left
-									raw_text = "[Country.GetInvestmentPool|vD]"
-								}
-							}
-							widget = {
-								textbox = {
-									position = { 120 20 }
-									size = { 550 14 }
-									fontsize = 17
-									parentanchor = vcenter
-									align = nobaseline|right
-									max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_investment_pool_var').GetValue)]"
-									background = {
-										texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
-										color = "[Country.GetMapColor]"
-										mirror = horizontal 
-										using = frame_small_mask
-										alpha = 1.0
-										modify_texture = {
-											blend_mode = add
-										}
-									}
-								}
-							}
-							flowcontainer = {
-								textbox = {
-									raw_text = "[Country.GetFlagTextIcon]"
-									autoresize = yes
-									parentanchor = vcenter
-									align = nobaseline
-									fontsize = 30
-									tooltip = "[Country.GetNameNoFlag]"	
-								}
-							}
-						}
-					}
-				}
-				flowcontainer = {
-					resizeparent = yes
-					direction = vertical
-					maximumsize = { 700 -1 }
-					minimumsize = { 700 -1 }
-					datamodel = "[GetPlayer.MakeScope.GetList('nvgm_subject_techs_researched_list')]"
-					widget = {
-						size = { 20 20 }
-					}
-					textbox = {
-						parentanchor = hcenter|center
-						align = center
-						fontsize = 25
-						raw_text = "[concept_technology]"
-					}
-					widget = {
-						size = { 25 25 }
-					}
-					item = {
-						flowcontainer = {
-							spacing = 5
-							datacontext = "[Scope.GetCountry]"
-							widget = {
-								textbox = {
-									position = { 80 20 }
-									size = { 700 14 }
-									fontsize = 17
-									parentanchor = vcenter
-									align = nobaseline|left
-									raw_text = "[Country.MakeScope.Var('nvgm_subject_techs_researched_value').GetValue)|v0]"
-								}
-							}
-							widget = {
-								textbox = {
-									position = { 120 20 }
-									size = { 550 14 }
-									fontsize = 17
-									parentanchor = vcenter
-									align = nobaseline|right
-									max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_techs_researched_var').GetValue)]"
-									background = {
-										texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
-										color = "[Country.GetMapColor]"
-										mirror = horizontal 
-										using = frame_small_mask
-										alpha = 1.0
-										modify_texture = {
-											blend_mode = add
-										}
-									}
-								}
-							}
-							flowcontainer = {
-								textbox = {
-									raw_text = "[Country.GetFlagTextIcon]"
-									autoresize = yes
-									parentanchor = vcenter
-									align = nobaseline
-									fontsize = 30
-									tooltip = "[Country.GetNameNoFlag]"	
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		blockoverride "fixed_bottom" {
-			flowcontainer = {
-				using = default_list_position
-				direction = vertical
-				flowcontainer = {
-					textbox = {
-						raw_text = "Reset"
-						autoresize = yes
-						margin = { 10 10 }
-						multiline = yes
-					}
-					button_icon_reset = {
-						parentanchor = vcenter|left
-						tooltip = "TOOLTIP_RESET"
-						onclick = "[ExecuteConsoleCommand('event nvgm_ranking_chart.2')]"
 						size = { 24 24 }
 					}
 				}
@@ -794,6 +619,259 @@
 							onclick = "[GetVariableSystem.Toggle( 'show_not_nvgm_10_ranking' )]"
 							size = { 24 24 }
 						}
+					}
+				}
+			}
+		}
+	}
+	type nvgm_subject_popup_1 = default_popup
+	{
+		layer = top
+		# visible = "[GetVariableSystem.Exists('show_nvgm_subject_popup')]"
+		visible = "[And(GetVariableSystem.Exists('show_nvgm_subject_popup'),GetVariableSystem.Exists('show_nvgm_subject_popup_investment_pool'))]"
+		blockoverride "window_header_name" {
+			text = "Overlord & Subject Data"
+		}
+		blockoverride "header_back_button_visibility" {
+			visible = yes
+		}
+		blockoverride "header_close_button_visibility" {
+			visible = yes
+		}
+    blockoverride "header_back_button" {
+			onclick = "[GetVariableSystem.Clear('show_nvgm_default_popup'))]"
+			onclick = "[GetVariableSystem.Toggle('show_nvgm_default_popup')]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+    }
+		blockoverride "header_close_button" {
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup')]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+		}
+		blockoverride "scrollarea_content" {
+			nvgm_subject_popup_investment_pool = {}
+		}
+		blockoverride "fixed_bottom" {
+			flowcontainer = {
+				using = default_list_position
+				direction = vertical
+				flowcontainer = {
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "[concept_investment_pool]"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_investment_pool')]"
+					}
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "NVGM_SUBJECT_POP_STRATA"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_pop_strata')]"
+					}
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "[concept_technology]"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_techs_researched')]"
+					}
+				}
+				flowcontainer = {
+					parentanchor = hcenter
+					textbox = {
+						raw_text = "Reset"
+						autoresize = yes
+						margin = { 10 10 }
+						multiline = yes
+					}
+					button_icon_reset = {
+						parentanchor = vcenter|left
+						tooltip = "TOOLTIP_RESET"
+						onclick = "[ExecuteConsoleCommand('event nvgm_ranking_chart.2')]"
+						size = { 24 24 }
+					}
+				}
+			}
+		}
+	}
+	type nvgm_subject_popup_2 = default_popup
+	{
+		layer = top
+		visible = "[And(GetVariableSystem.Exists('show_nvgm_subject_popup'),GetVariableSystem.Exists('show_nvgm_subject_popup_pop_strata'))]"
+		blockoverride "window_header_name" {
+			text = "Overlord & Subject Data"
+		}
+		blockoverride "header_back_button_visibility" {
+			visible = yes
+		}
+		blockoverride "header_close_button_visibility" {
+			visible = yes
+		}
+    blockoverride "header_back_button" {
+			onclick = "[GetVariableSystem.Clear('show_nvgm_default_popup'))]"
+			onclick = "[GetVariableSystem.Toggle('show_nvgm_default_popup')]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+    }
+		blockoverride "header_close_button" {
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup')]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+		}
+		blockoverride "scrollarea_content" {
+			nvgm_subject_popup_pop_strata = {}
+		}
+		blockoverride "fixed_bottom" {
+			flowcontainer = {
+				using = default_list_position
+				direction = vertical
+				flowcontainer = {
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "[concept_investment_pool]"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_investment_pool')]"
+					}
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "NVGM_SUBJECT_POP_STRATA"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_pop_strata')]"
+					}
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "[concept_technology]"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_techs_researched')]"
+					}
+				}
+				flowcontainer = {
+					parentanchor = hcenter
+					textbox = {
+						raw_text = "Reset"
+						autoresize = yes
+						margin = { 10 10 }
+						multiline = yes
+					}
+					button_icon_reset = {
+						parentanchor = vcenter|left
+						tooltip = "TOOLTIP_RESET"
+						onclick = "[ExecuteConsoleCommand('event nvgm_ranking_chart.2')]"
+						size = { 24 24 }
+					}
+				}
+			}
+		}
+	}
+	type nvgm_subject_popup_3 = default_popup
+	{
+		layer = top
+		visible = "[And(GetVariableSystem.Exists('show_nvgm_subject_popup'),GetVariableSystem.Exists('show_nvgm_subject_popup_techs_researched'))]"
+		blockoverride "window_header_name" {
+			text = "Overlord & Subject Data"
+		}
+		blockoverride "header_back_button_visibility" {
+			visible = yes
+		}
+		blockoverride "header_close_button_visibility" {
+			visible = yes
+		}
+    blockoverride "header_back_button" {
+			onclick = "[GetVariableSystem.Clear('show_nvgm_default_popup'))]"
+			onclick = "[GetVariableSystem.Toggle('show_nvgm_default_popup')]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+    }
+		blockoverride "header_close_button" {
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup')]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+			onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+		}
+		blockoverride "scrollarea_content" {
+			nvgm_subject_popup_techs_researched = {}
+		}
+		blockoverride "fixed_bottom" {
+			flowcontainer = {
+				using = default_list_position
+				direction = vertical
+				flowcontainer = {
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "[concept_investment_pool]"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_investment_pool')]"
+					}
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "NVGM_SUBJECT_POP_STRATA"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_pop_strata')]"
+					}
+					button = {
+						using = default_button
+						size = { 200 40 }
+						text = "[concept_technology]"
+						# parentanchor = hcenter
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_investment_pool'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_pop_strata'))]"
+						onclick = "[GetVariableSystem.Clear('show_nvgm_subject_popup_techs_researched'))]"
+						onclick = "[GetVariableSystem.Toggle('show_nvgm_subject_popup_techs_researched')]"
+					}
+				}
+				flowcontainer = {
+					parentanchor = hcenter
+					textbox = {
+						raw_text = "Reset"
+						autoresize = yes
+						margin = { 10 10 }
+						multiline = yes
+					}
+					button_icon_reset = {
+						parentanchor = vcenter|left
+						tooltip = "TOOLTIP_RESET"
+						onclick = "[ExecuteConsoleCommand('event nvgm_ranking_chart.2')]"
+						size = { 24 24 }
 					}
 				}
 			}
@@ -4204,4 +4282,752 @@ types NVGM_ranking_chart_types {
 			}
 		}
 	}
+}
+
+types NVGM_subject_popup_types {
+	type nvgm_subject_popup_investment_pool = flowcontainer
+	{
+		resizeparent = yes
+		direction = horizontal
+		maximumsize = { 700 -1 }
+		minimumsize = { 700 -1 }
+		position = { 0 0 }
+		flowcontainer = {
+			direction = vertical
+			datamodel = "[GetPlayer.MakeScope.GetList('nvgm_subject_investment_pool_list')]"
+			maximumsize = { 700 -1 }
+			minimumsize = { 700 -1 }
+			widget = {
+				size = { 20 20 }
+			}
+			textbox = {
+				parentanchor = hcenter|center
+				align = center
+				fontsize = 25
+				raw_text = "[concept_investment_pool]"
+			}
+			widget = {
+				size = { 25 25 }
+			}
+			item = {
+				flowcontainer = {
+					spacing = 5
+					datacontext = "[Scope.GetCountry]"
+					widget = {
+						textbox = {
+							position = { 80 20 }
+							size = { 700 14 }
+							fontsize = 17
+							parentanchor = vcenter
+							align = nobaseline|left
+							raw_text = "[Country.GetInvestmentPool|vD]"
+						}
+					}
+					widget = {
+						textbox = {
+							position = { 120 20 }
+							size = { 550 14 }
+							fontsize = 17
+							parentanchor = vcenter
+							align = nobaseline|right
+							max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_investment_pool_var').GetValue)]"
+							background = {
+								texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
+								color = "[Country.GetMapColor]"
+								mirror = horizontal 
+								using = frame_small_mask
+								alpha = 1.0
+								modify_texture = {
+									blend_mode = add
+								}
+							}
+						}
+					}
+					flowcontainer = {
+						textbox = {
+							raw_text = "[Country.GetFlagTextIcon]"
+							autoresize = yes
+							parentanchor = vcenter
+							align = nobaseline
+							fontsize = 30
+							tooltip = "[Country.GetNameNoFlag]"	
+						}
+					}
+				}
+			}
+		}
+	}
+	type nvgm_subject_popup_pop_strata = flowcontainer
+	{
+		resizeparent = yes
+		direction = horizontal
+		maximumsize = { 700 -1 }
+		minimumsize = { 700 -1 }
+		position = { 0 0 }
+		flowcontainer = {
+			resizeparent = yes
+			direction = vertical
+			maximumsize = { 700 -1 }
+			minimumsize = { 700 -1 }
+			datamodel = "[GetPlayer.MakeScope.GetList('nvgm_subject_pop_strata_list')]"
+			widget = {
+				size = { 20 20 }
+			}
+			textbox = {
+				parentanchor = hcenter|center
+				align = center
+				fontsize = 25
+				raw_text = "NVGM_SUBJECT_POP_STRATA"
+			}
+			widget = {
+				size = { 25 25 }
+			}
+			item = {
+				flowcontainer = {
+					datacontext = "[Scope.GetCountry]"
+					widget = {
+						textbox = {
+							position = { 45 21 }
+							size = { 700 14 }
+							fontsize = 12
+							parentanchor = vcenter
+							align = nobaseline|left
+							raw_text = "#O [Country.MakeScope.Var('nvgm_subject_lower_strata_value').GetValue)|2] #!: #U [Country.MakeScope.Var('nvgm_subject_middle_strata_value').GetValue)|2] #!: #green [Country.MakeScope.Var('nvgm_subject_upper_strata_value').GetValue)|2] #!"
+						}
+					}
+					flowcontainer = {
+						textbox = {
+							raw_text = "[Country.GetFlagTextIcon]"
+							autoresize = yes
+							parentanchor = vcenter
+							align = nobaseline
+							fontsize = 30
+							tooltip = "[Country.GetNameNoFlag]"	
+						}
+					}
+					widget = {
+						direction = horizontal
+						size = { 550 14 }
+						textbox = {
+							position = { 100 14 }
+							size = { 550 14 }
+							fontsize = 17
+							parentanchor = vcenter|right
+							align = nobaseline|right
+							max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_lower_strata_var').GetValue)]"
+							background = {
+								texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
+								color = { 1.0 0.67 0.45 1.0 }
+								mirror = horizontal 
+								using = frame_small_mask
+								alpha = 1.0
+								modify_texture = {
+									blend_mode = add
+								}
+							}
+						}
+						textbox = {
+							position = { 100 14 }
+							size = { 550 14 }
+							fontsize = 17
+							parentanchor = vcenter|right
+							align = nobaseline|right
+							max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_middle_strata_var').GetValue)]"
+							background = {
+								texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
+								color = { 0.41 0.67 0.74 1.0 }
+								mirror = horizontal 
+								using = frame_small_mask
+								alpha = 1.0
+								modify_texture = {
+									blend_mode = add
+								}
+							}
+						}
+						textbox = {	
+							# position = { 100 14 }
+							size = { 550 14 }
+							fontsize = 17
+							parentanchor = vcenter|right
+							align = nobaseline|right
+							max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_upper_strata_var').GetValue)]"	
+							background = {
+								texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
+								color = { 0.39 0.67 0.45 1.0 }
+								mirror = horizontal 
+								using = frame_small_mask
+								alpha = 1.0
+								modify_texture = {
+									blend_mode = add
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	type nvgm_subject_popup_techs_researched = flowcontainer
+	{
+		resizeparent = yes
+		direction = horizontal
+		maximumsize = { 700 -1 }
+		minimumsize = { 700 -1 }
+		position = { 0 0 }
+		flowcontainer = {
+			resizeparent = yes
+			direction = vertical
+			maximumsize = { 700 -1 }
+			minimumsize = { 700 -1 }
+			datamodel = "[GetPlayer.MakeScope.GetList('nvgm_subject_techs_researched_list')]"
+			widget = {
+				size = { 20 20 }
+			}
+			textbox = {
+				parentanchor = hcenter|center
+				align = center
+				fontsize = 25
+				raw_text = "[concept_technology]"
+			}
+			widget = {
+				size = { 25 25 }
+			}
+			item = {
+				flowcontainer = {
+					spacing = 5
+					datacontext = "[Scope.GetCountry]"
+					widget = {
+						textbox = {
+							position = { 80 20 }
+							size = { 700 14 }
+							fontsize = 17
+							parentanchor = vcenter
+							align = nobaseline|left
+							raw_text = "[Country.MakeScope.Var('nvgm_subject_techs_researched_value').GetValue)|v0]"
+						}
+					}
+					widget = {
+						textbox = {
+							position = { 120 20 }
+							size = { 550 14 }
+							fontsize = 17
+							parentanchor = vcenter
+							align = nobaseline|right
+							max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_techs_researched_var').GetValue)]"
+							background = {
+								texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
+								color = "[Country.GetMapColor]"
+								mirror = horizontal 
+								using = frame_small_mask
+								alpha = 1.0
+								modify_texture = {
+									blend_mode = add
+								}
+							}
+						}
+					}
+					flowcontainer = {
+						textbox = {
+							raw_text = "[Country.GetFlagTextIcon]"
+							autoresize = yes
+							parentanchor = vcenter
+							align = nobaseline
+							fontsize = 30
+							tooltip = "[Country.GetNameNoFlag]"	
+						}
+					}
+				}
+			}
+		}
+	}
+	# type nvgm_subject_popup_company = flowcontainer
+	# {
+	# 	resizeparent = yes
+	# 	direction = horizontal
+	# 	maximumsize = { 700 -1 }
+	# 	minimumsize = { 700 -1 }
+	# 	position = { 0 0 }
+	# 	flowcontainer = {
+	# 		resizeparent = yes
+	# 		direction = vertical
+	# 		maximumsize = { 700 -1 }
+	# 		minimumsize = { 700 -1 }
+	# 		datamodel = "[GetPlayer.MakeScope.GetList('nvgm_subject_company_list')]"
+	# 		widget = {
+	# 			size = { 20 20 }
+	# 		}
+	# 		textbox = {
+	# 			parentanchor = hcenter|center
+	# 			align = center
+	# 			fontsize = 25
+	# 			raw_text = "[concept_company]"
+	# 		}
+	# 		widget = {
+	# 			size = { 25 25 }
+	# 		}
+	# 		item = {
+	# 			flowcontainer = {
+	# 				spacing = 5
+	# 				datacontext = "[Scope.GetCompany]"
+	# 				widget = {
+	# 					textbox = {
+	# 						position = { 80 20 }
+	# 						size = { 700 14 }
+	# 						fontsize = 17
+	# 						parentanchor = vcenter
+	# 						align = nobaseline|left
+	# 						raw_text = "[concept_productivity]: @money![Company.GetProductivity|v1]"
+	# 					}
+	# 				}
+	# 				widget = {
+	# 					textbox = {
+	# 						position = { 120 20 }
+	# 						size = { 550 14 }
+	# 						fontsize = 17
+	# 						parentanchor = vcenter
+	# 						align = nobaseline|right
+	# 						max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_company_var').GetValue)]"
+	# 						background = {
+	# 							texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
+	# 							# color = "[Country.GetMapColor]"
+	# 							color = { 1 1 1 1 }
+	# 							mirror = horizontal 
+	# 							using = frame_small_mask
+	# 							alpha = 1.0
+	# 							modify_texture = {
+	# 								blend_mode = add
+	# 							}
+	# 						}
+	# 					}
+	# 				}
+	# 				flowcontainer = {
+	# 					icon = {
+	# 						size = { 30 30 }
+	# 						texture = "[Company.GetCompanyType.GetIcon]"
+	# 					}
+	# 					# textbox = {
+	# 					# 	raw_text = "[Company.GetCompanyType.GetIcon]"
+	# 					# 	autoresize = yes
+	# 					# 	parentanchor = vcenter
+	# 					# 	align = nobaseline
+	# 					# 	fontsize = 30
+	# 					# 	# tooltip = "[Country.GetNameNoFlag]"	
+	# 					# }
+	# 				}
+	# 			}
+	# 		}
+	# 	}
+	# }
+	# type nvgm_subject_popup_techs_tree = flowcontainer
+	# {
+	# 	resizeparent = yes
+	# 	direction = horizontal
+	# 	maximumsize = { 700 -1 }
+	# 	minimumsize = { 700 -1 }
+	# 	position = { 0 0 }
+	# 	flowcontainer = {
+	# 		resizeparent = yes
+	# 		direction = vertical
+	# 		maximumsize = { 700 -1 }
+	# 		minimumsize = { 700 -1 }
+	# 		datamodel = "[GetPlayer.MakeScope.GetList('nvgm_subject_techs_researched_list')]"
+	# 		widget = {
+	# 			size = { 20 20 }
+	# 		}
+	# 		textbox = {
+	# 			parentanchor = hcenter|center
+	# 			align = center
+	# 			fontsize = 25
+	# 			raw_text = "[concept_technology]"
+	# 		}
+	# 		widget = {
+	# 			size = { 25 25 }
+	# 		}
+	# 		item = {
+	# 			flowcontainer = {
+	# 				spacing = 5
+	# 				datacontext = "[Scope.GetCountry]"
+	# 				widget = {
+	# 					textbox = {
+	# 						position = { 80 20 }
+	# 						size = { 700 14 }
+	# 						fontsize = 17
+	# 						parentanchor = vcenter
+	# 						align = nobaseline|left
+	# 						raw_text = "[Country.MakeScope.Var('nvgm_subject_techs_researched_value').GetValue)|v0]"
+	# 					}
+	# 				}
+	# 				widget = {
+	# 					textbox = {
+	# 						position = { 120 20 }
+	# 						size = { 550 14 }
+	# 						fontsize = 17
+	# 						parentanchor = vcenter
+	# 						align = nobaseline|right
+	# 						max_width = "[FixedPointToFloat(Country.MakeScope.Var('nvgm_subject_techs_researched_var').GetValue)]"
+	# 						background = {
+	# 							texture = "gfx/interface/backgrounds/fancy_pattern_2.dds"
+	# 							color = "[Country.GetMapColor]"
+	# 							mirror = horizontal 
+	# 							using = frame_small_mask
+	# 							alpha = 1.0
+	# 							modify_texture = {
+	# 								blend_mode = add
+	# 							}
+	# 						}
+	# 					}
+	# 				}
+	# 				flowcontainer = {
+	# 					textbox = {
+	# 						raw_text = "[Country.GetFlagTextIcon]"
+	# 						autoresize = yes
+	# 						parentanchor = vcenter
+	# 						align = nobaseline
+	# 						fontsize = 30
+	# 						tooltip = "[Country.GetNameNoFlag]"	
+	# 					}
+	# 				}
+	# 			}
+	# 		}
+	# 	}
+	# }
+	# type nvgm_subject_popup_techs_panel = widget
+	# {
+	# 	size = { 100% 100% }
+	# 	### ILLUSTRATIONS
+	# 	background = {
+	# 		using = illu_alpha
+	# 		fittype = center
+	# 		texture = "gfx/interface/illustrations/tech_tree/illustration_tech_production.dds"
+	# 		visible = "[InformationPanel.IsTabSelected('production')]"
+	# 		using = default_content_fade
+	# 	}
+	# 	background = {
+	# 		using = illu_alpha
+	# 		fittype = center
+	# 		texture = "gfx/interface/illustrations/tech_tree/illustration_tech_military.dds"
+	# 		visible = "[InformationPanel.IsTabSelected('military')]"
+	# 		using = default_content_fade
+	# 	}
+	# 	background = {
+	# 		using = illu_alpha
+	# 		fittype = center
+	# 		texture = "gfx/interface/illustrations/tech_tree/illustration_tech_society.dds"
+	# 		visible = "[InformationPanel.IsTabSelected('society')]"
+	# 		using = default_content_fade
+	# 	}
+	# 	### TECH TREES
+	# 	tech_tree_graph = {
+	# 		name = "tech_tree_panel_production"
+	# 		visible = "[InformationPanel.IsTabSelected('production')]"
+	# 		using = default_content_fade
+	# 		blockoverride "datamodel_lines" {
+	# 			datamodel = "[TechTreePanel.GetProductionTechTreeLines]"
+	# 		}
+	# 		blockoverride "datamodel_items" {
+	# 			datamodel = "[TechTreePanel.GetProductionTechTreeItems]"
+	# 		}
+	# 		blockoverride "extra_lines" {
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 -100 }
+	# 				size = { 200% 1350 }
+	# 			}
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 2200 }
+	# 				size = { 200% 950 }
+	# 			}
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 4060 }
+	# 				size = { 200% 500 }
+	# 			}
+	# 		}
+	# 		blockoverride "starting_pan_position" {
+	# 			pan_position = "[GetDefine('NGUI', 'TECH_TREE_PRODUCTION_INITIAL_POSITION')]"
+	# 		}
+	# 	}
+	# 	tech_tree_graph = {
+	# 		name = "tech_tree_panel_military"
+	# 		visible = "[InformationPanel.IsTabSelected('military')]"
+	# 		using = default_content_fade
+	# 		blockoverride "datamodel_lines" {
+	# 			datamodel = "[TechTreePanel.GetMilitaryTechTreeLines]"
+	# 		}
+	# 		blockoverride "datamodel_items" {
+	# 			datamodel = "[TechTreePanel.GetMilitaryTechTreeItems]"
+	# 		}
+	# 		blockoverride "extra_lines" {
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 -100 }
+	# 				size = { 200% 1830 }
+	# 			}
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 2650 }
+	# 				size = { 200% 960 }
+	# 			}
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 4540 }
+	# 				size = { 200% 950 }
+	# 			}
+	# 		}
+	# 		blockoverride "starting_pan_position" {
+	# 			pan_position = "[GetDefine('NGUI', 'TECH_TREE_MILITARY_INITIAL_POSITION')]"
+	# 		}
+	# 	}
+	# 	tech_tree_graph = {
+	# 		name = "tech_tree_panel_society"
+	# 		visible = "[InformationPanel.IsTabSelected('society')]"
+	# 		using = default_content_fade
+	# 		blockoverride "datamodel_lines" {
+	# 			datamodel = "[TechTreePanel.GetSocietyTechTreeLines]"
+	# 		}
+	# 		blockoverride "datamodel_items" {
+	# 			datamodel = "[TechTreePanel.GetSocietyTechTreeItems]"
+	# 		}
+	# 		blockoverride "extra_lines" {
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 -100 }
+	# 				size = { 200% 2310 }
+	# 			}
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 3120 }
+	# 				size = { 200% 960 }
+	# 			}
+	# 			icon = {
+	# 				using = tech_tree_divider
+	# 				position = { 0 4540 }
+	# 				size = { 200% 500 }
+	# 			}
+	# 		}
+	# 		blockoverride "starting_pan_position" {
+	# 			pan_position = "[GetDefine('NGUI', 'TECH_TREE_SOCIETY_INITIAL_POSITION')]"
+	# 		}
+	# 	}
+	# 	container = {
+	# 		parentanchor = top|right
+	# 		position = { -10 10 }
+	# 		button_icon_reset = {
+	# 			visible = "[InformationPanel.IsTabSelected('production')]"
+	# 			tooltip = "TOOLTIP_RESET"
+	# 			onclick = "[TechTreePanel.ResetProductionView]"
+	# 			size = { 42 42 }
+	# 		}
+	# 		button_icon_reset = {
+	# 			visible = "[InformationPanel.IsTabSelected('military')]"
+	# 			tooltip = "TOOLTIP_RESET"
+	# 			onclick = "[TechTreePanel.ResetMilitaryView]"
+	# 			size = { 42 42 }
+	# 		}
+	# 		button_icon_reset = {
+	# 			visible = "[InformationPanel.IsTabSelected('society')]"
+	# 			tooltip = "TOOLTIP_RESET"
+	# 			onclick = "[TechTreePanel.ResetSocietyView]"
+	# 			size = { 42 42 }
+	# 		}
+	# 	}
+	# }
+	# type nvgm_subject_popup_tech_tree_graph = zoomarea 
+	# {
+	# 	name = "graph_zoomarea"
+	# 	size = { 100% 100% }
+	# 	background = {
+	# 		using = entry_header
+			
+	# 		modify_texture = {
+	# 			texture = "gfx/interface/masks/fade_vertical_top.dds"
+	# 			spriteType = Corneredstretched
+	# 			spriteborder = { 0 0 }
+	# 			blend_mode = alphamultiply
+	# 		}
+	# 	}
+	# 	state = {
+	# 		name = "_zoom_changed"
+	# 		duration = 0.15
+	# 	}
+	# 	zoom = "[GetDefine('NGUI', 'TECH_TREE_INITIAL_ZOOM')]"
+	# 	zoom_step = 0.15
+	# 	zoom_min = 0.20
+	# 	zoom_max = 1
+	# 	draggable_by = left # Do not add 'middle' click here, otherwise you will re-introduce PRCAL-16945
+	# 	block "starting_pan_position" {}
+	# 	#scissor = yes
+	# 	zoomwidget = {
+	# 		container = {
+	# 			widget = {
+	# 				size = { 100% 100% }
+	# 				alpha = 0.15
+	# 				block "extra_lines" {}
+	# 			}
+	# 			container = { #Line Mech	
+	# 				# These two widgets determine the margin between graph nodes
+	# 				widget = {
+	# 					name = "margin_top_left" # Do not change this name
+	# 					size = { 50 150 }
+	# 				}
+	# 				widget = {
+	# 					name = "margin_bottom_right" # Do not change this name
+	# 					size = { 70 170 }
+	# 				}
+	# 				# This widget tells the layout how to offset and space the lines
+	# 				widget = {
+	# 					name = "line_offset" # Do not change this name
+	# 					position = { 0 -10 } # Fixed offset (i.e. to compensate for line width)
+	# 					size = { 30 0 } # Spacing between edges
+	# 				}
+					
+	# 				# Container for all the edges in the graph
+	# 				container = {
+	# 					name = "line_area" # Do not change this name
+	# 					block "datamodel_lines" {
+	# 						#datamodel = "[TechTreePanel.GetTechTreeLines]"
+	# 					}
+	# 					item = {
+	# 						container = {
+	# 							### CANNOT RESEARCH SPLINE
+	# 							techtree_spline = {
+	# 								visible = "[And(Not(IsValid(TechTreeLine.GetTargetTech.Research(GetPlayer.Self))), Not(TechTreeLine.GetTargetTech.HasResearchedTech(GetPlayer.Self)))]"
+	# 							}
+	# 							### IS RESEARCHING SPLINE
+	# 							techtree_spline = {
+	# 								visible = "[TechTreeLine.GetTargetTech.IsResearching(GetPlayer.Self)]"
+	# 								blockoverride "tech_line_texture_border" {
+	# 									texture = "gfx/interface/tech_tree/tech_line_border_researching.dds"
+	# 								}
+	# 								blockoverride "tech_line_texture" {
+	# 									texture = "gfx/interface/tech_tree/tech_line_researching.dds"
+	# 								}					
+	# 							}
+	# 							### HAS RESEARCHED SPLINE
+	# 							techtree_spline = {
+	# 								visible = "[TechTreeLine.GetTargetTech.HasResearchedTech(GetPlayer.Self)]"
+	# 								blockoverride "tech_line_texture_border" {
+	# 									texture = "gfx/interface/tech_tree/tech_line_border_research_done.dds"
+	# 								}
+	# 								blockoverride "tech_line_texture" {
+	# 									texture = "gfx/interface/tech_tree/tech_line_research_done.dds"
+	# 								}
+	# 							}
+	# 							### CAN RESEARCH SPLINE
+	# 							techtree_spline = {
+	# 								visible = "[IsValid(TechTreeLine.GetTargetTech.Research(GetPlayer.Self))]"
+	# 							}
+	# 							### IS IN RESEARCH QUEUE SPLINE
+	# 							techtree_spline = {
+	# 								visible = "[TechTreeLine.GetTargetTech.IsInResearchQueue(GetPlayer.Self)]"
+	# 								blockoverride "tech_line_texture_border" {
+	# 									texture = "gfx/interface/tech_tree/tech_line_border_researching.dds"
+	# 								}
+	# 								blockoverride "tech_line_texture" {
+	# 									texture = "gfx/interface/tech_tree/tech_line_researching.dds"
+	# 								}					
+	# 							}
+	# 						}
+	# 					}
+	# 				}
+	# 				# Container for all the nodes in the graph
+	# 				container = {
+	# 					name = "node_area" # Do not change this name
+	# 					block "datamodel_items" {
+	# 						#datamodel = "[TechTreePanel.GetTechTreeItems]"
+	# 					}
+	# 					item = {
+	# 						widget = {
+	# 							size = { 465 150 }
+	# 							datacontext = "[TechTreeItem.GetTechnology]"
+	# 							position = "[TechTreeItem.GetPosition]"
+	# 							widgetid = "[TechTreeItem.GetKey]"
+	# 							visible = "[Technology.ShouldShow(GetPlayer.Self)]"
+	# 							tooltipwidget = {
+	# 								FancyTooltip_Technology_Tech_Tree = {}
+	# 							}
+	# 							### CAN RESEARCH
+	# 							technology = {
+	# 								visible = "[IsValid(Technology.Research(GetPlayer.Self))]"
+	# 								blockoverride "glow_animation" {}
+	# 							}
+	# 							### CAN´T RESEARCH
+	# 							technology = {
+	# 								visible = "[And(Technology.ShouldShow(GetPlayer.Self),Not(IsValid(Technology.Research(GetPlayer.Self))))]"
+	# 								blockoverride "glow_animation" {}
+	# 								blockoverride "round_frame" {
+	# 									button = {
+	# 										texture = "gfx/interface/backgrounds/round_frame_dec.dds"
+	# 										parentanchor = vcenter
+	# 										size = { 180 180 }
+	# 										alwaystransparent = yes
+	# 										enabled = no
+	# 										color = { 0.5 0.5 0.5 1 }
+	# 									}
+	# 								}
+	# 								blockoverride "name_background" {
+	# 									button = {
+	# 										size = { 100% 100% }
+											
+	# 										background = {
+	# 											using = blurry_dark_background
+	# 										}
+	# 										enabled = no
+	# 										color = { 0.5 0.5 0.5 1 }
+	# 										alwaystransparent = yes
+	# 									}
+	# 								}
+	# 								blockoverride "enabled" {
+	# 									enabled = no
+	# 								}
+	# 								blockoverride "alpha" {
+	# 									alpha = 0.5
+	# 								}
+	# 							}
+	# 							### HAS RESEARCHED
+	# 							technology = {
+	# 								visible = "[Technology.HasResearchedTech(GetPlayer.Self)]"
+	# 								blockoverride "glow_animation" {}
+	# 								blockoverride "unlocks_alpha" {
+	# 									alpha = 0.7
+	# 								}
+	# 							}
+	# 							### CURRENTLY RESEARCHED
+	# 							technology = {
+	# 								visible = "[Technology.IsResearching(GetPlayer.Self)]"
+	# 								blockoverride "name_formatting" {
+	# 									default_format = "#header"
+	# 									using = look_at_me_text_animation
+	# 								}
+	# 							}
+	# 							### TECH PROGRESS
+	# 							container = {
+	# 								tooltip = "TECHNOLOGY_GAIN_BREAKDOWN"
+	# 								parentanchor = bottom|right
+	# 								position = { -20 -15 }
+	# 								visible = "[Or(And(GreaterThan_CFixedPoint(Technology.GetProgress(GetPlayer.Self), '(CFixedPoint)0'), Not(Technology.HasResearchedTech(GetPlayer.Self))), GreaterThan_CFixedPoint(GetPlayer.GetMinWeeklyTechnologyProgressForTech(Technology.Self), '(CFixedPoint)0'))]"
+	# 								default_progressbar_horizontal = {
+	# 									size = { 270 25 }
+	# 									parentanchor = hcenter
+	# 									blockoverride "values" {
+	# 										max = "[FixedPointToFloat(Technology.GetCost(GetPlayer.Self))]"
+	# 										value = "[FixedPointToFloat(Technology.GetProgress(GetPlayer.Self))]"
+	# 									}
+	# 									textbox = {
+	# 										text = "TECHNOLOGY_PROGRESS_WITH_GAIN"
+	# 										align = nobaseline
+	# 										parentanchor = center
+	# 										autoresize = yes
+	# 										using = fontsize_xl
+	# 									}
+	# 								}
+	# 							}
+	# 						}
+	# 					}
+	# 				}
+	# 			}
+	# 		}
+	# 	}
+	# }
 }

@@ -14,3 +14,54 @@ nvgm_state_1_per_population = {
 	round = yes
 	min = 0
 }
+
+# 下層階級の人口 strata = lower
+nvgm_lower_strata_total_size = {
+	value = 0
+	every_scope_pop = {
+		if = {
+			limit = {
+				strata = lower
+			}
+			add = this.total_size
+		}
+	}
+	divide = this.total_population
+	multiply = 100
+	max = 100
+	min = 0
+}
+
+# 中流階級の人口 strata = middle
+nvgm_middle_strata_total_size = {
+	value = 0
+	every_scope_pop = {
+		if = {
+			limit = {
+				strata = middle
+			}
+			add = this.total_size
+		}
+	}
+	divide = this.total_population
+	multiply = 100
+	max = 100
+	min = 0
+}
+
+# 上層階級の人口 strata = upper
+nvgm_upper_strata_total_size = {
+	value = 0
+	every_scope_pop = {
+		if = {
+			limit = {
+				strata = upper
+			}
+			add = this.total_size
+		}
+	}
+	divide = this.total_population
+	multiply = 100
+	max = 100
+	min = 0
+}
